@@ -4,9 +4,10 @@
 
 - [X] Design program features
 - [X] Design program functions
-- [ ] Design record structure
-- [ ] Code custom var for records
+- [X] Design record structure
+- [X] Code custom var for records
 - [ ] Code functions and main
+- [ ] Dynamic memory allocation
 - [ ] Code the save and load of DB
 - [ ] Pretty CLI
 - [ ] Debug
