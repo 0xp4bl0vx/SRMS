@@ -6,7 +6,7 @@
 - [X] Design program functions
 - [X] Design record structure
 - [X] Code custom var for records
-- [ ] Code functions and main
+- [X] Code functions and main
 - [ ] Code the save and load of DB
 - [ ] Pretty CLI
 - [ ] Debug
@@ -28,10 +28,10 @@ that stores the students records. The program features are:
 - Search records???? (as an intro to search algorithms)
 
 ## Program functions
-- [ ] create()
-- [ ] edit()
-- [ ] remove()
-- [ ] view()
+- [x] create()
+- [x] edit()
+- [x] remove()
+- [x] view()
 - [ ] save()
 - [ ] load()
 - [ ] search()????
