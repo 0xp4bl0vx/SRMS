@@ -32,7 +32,7 @@ that stores the students records. The program features are:
 - [x] edit()
 - [x] remove()
 - [x] view()
-- [ ] save()
+- [x] save()
 - [ ] load()
 - [ ] search()????
 

@@ -10,6 +10,7 @@ struct Record {
     char class;
     float grades[5];
 };
+
 void create(struct Record* records, int index) {
     --index;
     records[index].id = index + 1;
@@ -108,12 +109,36 @@ void view(struct Record* records, int size) {
     }
 }
 
-void save() {
-
+void save(struct Record* records) {
+    //Recognize where program is executing
+    FILE *fptr = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "w");
+    for (int i = 0; i + 1 == records[i].id; i++) {
+        fprintf(fptr, "%d, %s, %d, %d, %c\n", records[i].id, records[i].name, records[i].age,
+            records[i].course, records[i].class);
+    }
+    fclose(fptr);
 }
 
-void load() {
+void load(struct Record* records) {
+    //Recognize where program is executing
+    FILE *fptr = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "r");
+    if (fptr == NULL) {
+        printf("Error opening file");
+    }else {
 
+        /*
+        char line[256];
+        for (int i = 0;  i < 2; i++) {
+            fgets(line, 256, fptr);
+            for (int j = 0; line[j] != '\n'; j++) {
+                if (line[j] == ',') {
+
+                }
+            }
+        }
+        */
+        fclose(fptr);
+    }
 }
 
 void fill(struct Record* records) {
@@ -131,7 +156,9 @@ void fill(struct Record* records) {
 
 int main() {
     struct Record records[30];
-    int size = sizeof(records) / sizeof(records[0]);
-    fill(records);
+    // Size for dynamic memory allocation
+    //int size = sizeof(records) / sizeof(records[0]);
+    load(records);
+    //view(records, 2);
     return 0;
 }
