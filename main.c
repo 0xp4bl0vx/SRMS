@@ -20,6 +20,7 @@ void create(struct Record* records, int index) {
     printf("\nEnter student age: ");
     fflush(stdout);
     scanf("%d", &records[index].age);
+    fflush(stdin);
     printf("\nEnter student course [1, 2, 3, 4]: ");
     fflush(stdout);
     scanf("%d", &records[index].course);
@@ -33,6 +34,8 @@ void create(struct Record* records, int index) {
     }
     printf("%c", records[index].class);
     printf("\nEnter student grades: ");
+    scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
+        &records[index].grades[3], &records[index].grades[4]);
     fflush(stdout);
     // Grades read and write must be reworked, a function might be useful for reading and writing the input
     //scanf("%f", &records[index].grades);
@@ -60,22 +63,23 @@ void edit(struct Record* records) {
                 break;
             case 'a':
                 printf("\nEnter student new age: ");
-                scanf("%d", &records[index-1].age);
+                scanf("%d", &records[index].age);
                 break;
             case 'c':
                 printf("\nEnter student new course: ");
-                scanf("%d", &records[index-1].course);
+                scanf("%d", &records[index].course);
                 break;
             case 'x':
                 printf("\nEnter student new class: ");
-                scanf("%c", &records[index-1].class);
+                scanf("%c", &records[index].class);
                 if (records[index].class > 68) {
                     records[index].class -= 32;
                 }
                 break;
             case 'g':
                 printf("\nEnter student new grades: ");
-                // Read and Write grades function
+                scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
+                    &records[index].grades[3], &records[index].grades[4]);
                 break;
             case 'e':
                 printf("\nRecord updated successfully");
@@ -104,8 +108,12 @@ void view(struct Record* records, int size) {
     printf("\n");
     for (int c = 0; c < size; c++) {
         // Add grades print
-        printf("%d, %s, %d, %d, %c\n", records[c].id, records[c].name, records[c].age,
+        printf("%d, %s, %d, %d, %c", records[c].id, records[c].name, records[c].age,
             records[c].course, records[c].class);
+        for (int i = 0; i < 5; i++) {
+            printf(", %0.2f", records[c].grades[i]);
+        }
+        printf("\n");
     }
 }
 
@@ -114,8 +122,12 @@ void save(struct Record* records) {
     FILE *fptr = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "w");
     // Print each record into the file
     for (int i = 0; i + 1 == records[i].id; i++) {
-        fprintf(fptr, "%d,%s,%d,%d,%c\n", records[i].id, records[i].name,
+        fprintf(fptr, "%d,%s,%d,%d,%c", records[i].id, records[i].name,
             records[i].age, records[i].course, records[i].class);
+        for (int j = 0; j < 5; j++) {
+            fprintf(fptr, ",%0.2f", records[i].grades[j]);
+        }
+        fprintf(fptr, "\n");
     }
     fclose(fptr);
 }
@@ -127,8 +139,9 @@ void load(struct Record* records) {
         printf("Error opening file");
     }else {
         int i = 0;
-        while (fscanf(fptr, "%d,%[^,],%d,%d,%c", &records[i].id, &records[i].name,
-            &records[i].age, &records[i].course, &records[i].class) == 5) {
+        while (fscanf(fptr, "%d,%[^,],%d,%d,%c,%f,%f,%f,%f,%f", &records[i].id, &records[i].name,
+        &records[i].age, &records[i].course, &records[i].class, &records[i].grades[0], &records[i].grades[1],
+        &records[i].grades[2], &records[i].grades[3], &records[i].grades[4]) == 10) {
             ++i;
         }
     }
@@ -140,6 +153,11 @@ void fill(struct Record* records) {
     records[0].age = 20;
     records[0].course = 2;
     records[0].class = 'A';
+    records[0].grades[0] = 3.4;
+    records[0].grades[1] = 5.33;
+    records[0].grades[2] = 7.45;
+    records[0].grades[3] = 9.89;
+    records[0].grades[4] = 8.8;
     records[1].id = 2;
     strcpy(records[1].name, "Ignacio Gomez");
     records[1].age = 23;
@@ -151,9 +169,8 @@ int main() {
     struct Record records[30];
     // Size for dynamic memory allocation
     int size = sizeof(records) / sizeof(records[0]);
-    //fill(records);
-    //save(records);
     load(records);
     view(records, 2);
+    save(records);
     return 0;
 }

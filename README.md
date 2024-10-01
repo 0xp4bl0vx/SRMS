@@ -7,7 +7,7 @@
 - [X] Design record structure
 - [X] Code custom var for records
 - [X] Code functions and main
-- [X] Code the save and load of DB
+- [x] Code the save and load of DB
 - [ ] Pretty CLI
 - [ ] Debug
 - [ ] Publish v1
