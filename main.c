@@ -5,8 +5,8 @@
 struct Record {
     int id;
     char name[30];
-    int age;
-    int course;
+    short int age;
+    short int course;
     char class;
     float grades[5];
 };
@@ -110,11 +110,12 @@ void view(struct Record* records, int size) {
 }
 
 void save(struct Record* records) {
-    //Recognize where program is executing
+    // Recognize where program is executing
     FILE *fptr = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "w");
+    // Print each record into the file
     for (int i = 0; i + 1 == records[i].id; i++) {
-        fprintf(fptr, "%d, %s, %d, %d, %c\n", records[i].id, records[i].name, records[i].age,
-            records[i].course, records[i].class);
+        fprintf(fptr, "%d,%s,%d,%d,%c\n", records[i].id, records[i].name,
+            records[i].age, records[i].course, records[i].class);
     }
     fclose(fptr);
 }
@@ -125,19 +126,11 @@ void load(struct Record* records) {
     if (fptr == NULL) {
         printf("Error opening file");
     }else {
-
-        /*
-        char line[256];
-        for (int i = 0;  i < 2; i++) {
-            fgets(line, 256, fptr);
-            for (int j = 0; line[j] != '\n'; j++) {
-                if (line[j] == ',') {
-
-                }
-            }
+        int i = 0;
+        while (fscanf(fptr, "%d,%[^,],%d,%d,%c", &records[i].id, &records[i].name,
+            &records[i].age, &records[i].course, &records[i].class) == 5) {
+            ++i;
         }
-        */
-        fclose(fptr);
     }
 }
 
@@ -157,8 +150,10 @@ void fill(struct Record* records) {
 int main() {
     struct Record records[30];
     // Size for dynamic memory allocation
-    //int size = sizeof(records) / sizeof(records[0]);
+    int size = sizeof(records) / sizeof(records[0]);
+    //fill(records);
+    //save(records);
     load(records);
-    //view(records, 2);
+    view(records, 2);
     return 0;
 }

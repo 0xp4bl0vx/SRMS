@@ -7,7 +7,7 @@
 - [X] Design record structure
 - [X] Code custom var for records
 - [X] Code functions and main
-- [ ] Code the save and load of DB
+- [X] Code the save and load of DB
 - [ ] Pretty CLI
 - [ ] Debug
 - [ ] Publish v1
@@ -33,7 +33,7 @@ that stores the students records. The program features are:
 - [x] remove()
 - [x] view()
 - [x] save()
-- [ ] load()
+- [x] load()
 - [ ] search()????
 
 ## Record Structure
