@@ -7,13 +7,13 @@
 - [X] Design record structure
 - [X] Code custom var for records
 - [X] Code functions and main
-- [x] Code the save and load of DB
-- [ ] Pretty CLI
+- [X] Code the save and load of DB
+- [X] Pretty CLI
 - [ ] Debug
-- [ ] Publish v1
 - [ ] Dynamic Memory allocation
-- [ ] Publish v1.1
+- [ ] Publish v1
 - [ ] search() function
+- [ ] Publish v1.1
 
 ## Program features
 
