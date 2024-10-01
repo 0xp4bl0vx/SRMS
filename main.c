@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 // Custom data type for student records
@@ -14,17 +15,17 @@ struct Record {
 void create(struct Record* records, int index) {
     --index;
     records[index].id = index + 1;
-    printf("\nEnter student name: ");
+    printf("Enter student name: ");
     fgets(records[index].name, 30, stdin);
     records[index].name[strcspn(records[index].name, "\n")] = '\0';
-    printf("\nEnter student age: ");
+    printf("Enter student age: ");
     fflush(stdout);
     scanf("%d", &records[index].age);
     fflush(stdin);
-    printf("\nEnter student course [1, 2, 3, 4]: ");
+    printf("Enter student course [1, 2, 3, 4]: ");
     fflush(stdout);
     scanf("%d", &records[index].course);
-    printf("\nEnter student class [A, B, C, D]: ");
+    printf("Enter student class [A, B, C, D]: ");
     fflush(stdout);
     fflush(stdin);
     scanf("%c", &records[index].class);
@@ -33,59 +34,59 @@ void create(struct Record* records, int index) {
         records[index].class -= 32;
     }
     printf("%c", records[index].class);
-    printf("\nEnter student grades: ");
+    printf("Enter student grades: ");
     scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
         &records[index].grades[3], &records[index].grades[4]);
     fflush(stdout);
     // Grades read and write must be reworked, a function might be useful for reading and writing the input
     //scanf("%f", &records[index].grades);
-    printf("\nNew record created successfully");
+    printf("New record created successfully");
     fflush(stdout);
 }
 
 void edit(struct Record* records) {
     char field;
     int index;
-    printf("\nIntroduce the record ID to be modified: ");
+    printf("Introduce the record ID to be modified: ");
     scanf("%d", &index);
     --index;
     while (1) {
-        printf("\nWhat data field you want to modify: ");
+        printf("What data field you want to modify: ");
         fflush(stdin);
         scanf("%c", &field);
         fflush(stdin);
 
         switch (field) {
             case 'n':
-                printf("\nEnter student new name: ");
+                printf("Enter student new name: ");
                 fgets(records[index].name, 30, stdin);
                 records[index].name[strspn(records[index].name, "\n")] = '\0';
                 break;
             case 'a':
-                printf("\nEnter student new age: ");
+                printf("Enter student new age: ");
                 scanf("%d", &records[index].age);
                 break;
             case 'c':
-                printf("\nEnter student new course: ");
+                printf("Enter student new course: ");
                 scanf("%d", &records[index].course);
                 break;
             case 'x':
-                printf("\nEnter student new class: ");
+                printf("Enter student new class: ");
                 scanf("%c", &records[index].class);
                 if (records[index].class > 68) {
                     records[index].class -= 32;
                 }
                 break;
             case 'g':
-                printf("\nEnter student new grades: ");
+                printf("Enter student new grades: ");
                 scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
                     &records[index].grades[3], &records[index].grades[4]);
                 break;
             case 'e':
-                printf("\nRecord updated successfully");
+                printf("Record updated successfully");
                 return;
             default:
-                printf("\nWrong data field");
+                printf("Wrong data field");
                 break;
         }
     }
@@ -105,7 +106,6 @@ void delete(struct Record* records, int size) {
 }
 
 void view(struct Record* records, int size) {
-    printf("\n");
     for (int c = 0; c < size; c++) {
         // Add grades print
         printf("%d, %s, %d, %d, %c", records[c].id, records[c].name, records[c].age,
@@ -165,12 +165,55 @@ void fill(struct Record* records) {
     records[1].class = 'B';
 }
 
+void banner() {
+    printf("+------------------------------------+\n");
+    printf("| Students Records Management System |\n");
+    printf("+------------------------------------+\n\n");
+}
+
 int main() {
     struct Record records[30];
     // Size for dynamic memory allocation
     int size = sizeof(records) / sizeof(records[0]);
-    load(records);
-    view(records, 2);
-    save(records);
-    return 0;
+    banner();
+    while (1) {
+        int option = 0;
+        fflush(stdin);
+        printf("[0] Create record\n");
+        printf("[1] Edit record\n");
+        printf("[2] View record\n");
+        printf("[3] Delete record\n");
+        printf("[4] Save\n");
+        printf("[5] Load\n");
+        printf("[6] Exit\n");
+        printf("Enter your option: ");
+        scanf("%d", &option);
+        fflush(stdin);
+
+        switch (option) {
+            case 0:
+                create(records, size);
+                break;
+            case 1:
+                edit(records);
+                break;
+            case 2:
+                view(records, size);
+                break;
+            case 3:
+                delete(records, size);
+            case 4:
+                save(records);
+                break;
+            case 5:
+                load(records);
+                break;
+            case 6:
+                exit(0);
+            default:
+                printf("Wrong option");
+                return 0;
+        }
+        size = sizeof(records) / sizeof(records[0]);
+    }
 }
