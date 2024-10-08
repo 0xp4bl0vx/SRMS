@@ -10,8 +10,7 @@
 - [X] Code the save and load of DB
 - [X] Pretty CLI
 - [X] Dynamic Memory allocation
-- [ ] Remove fflush() instructions
-- [ ] Debug
+- [X] Debug (Bug when printing line 38)
 - [ ] Remove fill() or comment
 - [ ] Publish v1
 - [ ] search() function

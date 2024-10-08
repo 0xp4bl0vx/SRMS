@@ -30,15 +30,12 @@ void create(struct Record* records, int index) {
     fgets(records[index].name, 30, stdin);
     records[index].name[strcspn(records[index].name, "\n")] = '\0';
     printf("Enter student age: ");
-    fflush(stdout);
     scanf("%d", &records[index].age);
     fflush(stdin);
     printf("Enter student course [1, 2, 3, 4]: ");
-    fflush(stdout);
     scanf("%d", &records[index].course);
-    printf("Enter student class [A, B, C, D]: ");
-    fflush(stdout);
     fflush(stdin);
+    printf("Enter student class [A, B, C, D]: ");
     scanf("%c", &records[index].class);
     // Convert input from lowercase to uppercase
     if (records[index].class > 68) {
@@ -47,51 +44,55 @@ void create(struct Record* records, int index) {
     printf("Enter student grades: ");
     scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
         &records[index].grades[3], &records[index].grades[4]);
-    fflush(stdout);
     printf("New record created successfully\n");
-    fflush(stdout);
 }
 
 void edit(struct Record* records) {
-    char field;
+    int field = -1;
     int index;
     printf("Introduce the record ID to be modified: ");
     scanf("%d", &index);
     --index;
     while (1) {
+        printf("[0] Name\n");
+        printf("[1] Age\n");
+        printf("[2] Course\n");
+        printf("[3] Class\n");
+        printf("[4] Grades\n");
+        printf("[5] Exit\n");
         printf("What data field you want to modify: ");
-        fflush(stdin);
-        scanf("%c", &field);
+        scanf("%d", &field);
         fflush(stdin);
 
         switch (field) {
-            case 'n':
+            case 0:
                 printf("Enter student new name: ");
-                fflush(stdin);
                 fgets(records[index].name, 30, stdin);
                 records[index].name[strcspn(records[index].name, "\n")] = '\0';
                 break;
-            case 'a':
+            case 1:
                 printf("Enter student new age: ");
                 scanf("%d", &records[index].age);
+                fflush(stdin);
                 break;
-            case 'c':
+            case 2:
                 printf("Enter student new course: ");
                 scanf("%d", &records[index].course);
+                fflush(stdin);
                 break;
-            case 'x':
+            case 3:
                 printf("Enter student new class: ");
                 scanf("%c", &records[index].class);
                 if (records[index].class > 68) {
                     records[index].class -= 32;
                 }
                 break;
-            case 'g':
+            case 4:
                 printf("Enter student new grades: ");
                 scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
                     &records[index].grades[3], &records[index].grades[4]);
                 break;
-            case 'e':
+            case 5:
                 printf("Record updated successfully\n");
                 return;
             default:
@@ -103,10 +104,10 @@ void edit(struct Record* records) {
 
 void delete(struct Record* records, int size) {
     int index;
-    fflush(stdin);
-    fflush(stdout);
+    scanf("\n");
     printf("Enter the record ID to be deleted: ");
     scanf("%d", &index);
+    fflush(stdin);
     for (int c = index - 1; c < size; c++) {
         records[c] = records[c+1];
         records[c].id -= 1;
@@ -117,7 +118,6 @@ void delete(struct Record* records, int size) {
 
 void view(struct Record* records, int size) {
     for (int c = 0; c < size; c++) {
-        // Add grades print
         printf("%d, %s, %d, %d, %c", records[c].id, records[c].name, records[c].age,
             records[c].course, records[c].class);
         for (int i = 0; i < 5; i++) {
@@ -150,7 +150,6 @@ void load(struct Record* records, int* size) {
         printf("Error opening file\n");
         return;
     }else {
-        // Calc lines num
         int lines = 0;
         for (char c = getc(fptr_1); c != EOF; c = getc(fptr_1)) {
             if (c == '\n') {
@@ -213,7 +212,6 @@ int main() {
         int initial_data = 0;
         while (initial_data == 0) {
             option = -1;
-            fflush(stdin);
             printf("[0] Create record\n");
             printf("[1] Load records\n");
             printf("[2] Exit\n");
@@ -239,7 +237,7 @@ int main() {
         }
         while (1) {
             option = -1;
-            fflush(stdin);
+            scanf("\n");
             printf("[0] Create record\n");
             printf("[1] Edit record\n");
             printf("[2] View record\n");
