@@ -12,6 +12,17 @@ struct Record {
     float grades[5];
 };
 
+void reallocate_memory(struct Record** records, int size) {
+    struct Record* tmp = realloc(*records, size * sizeof(struct Record));
+    if (tmp == NULL) {
+        printf("Memory allocation error");
+        free(*records);
+        exit(1);
+    } else {
+        *records = tmp;
+    }
+}
+
 void create(struct Record* records, int index) {
     --index;
     records[index].id = index + 1;
@@ -33,14 +44,11 @@ void create(struct Record* records, int index) {
     if (records[index].class > 68) {
         records[index].class -= 32;
     }
-    printf("%c", records[index].class);
     printf("Enter student grades: ");
     scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
         &records[index].grades[3], &records[index].grades[4]);
     fflush(stdout);
-    // Grades read and write must be reworked, a function might be useful for reading and writing the input
-    //scanf("%f", &records[index].grades);
-    printf("New record created successfully");
+    printf("New record created successfully\n");
     fflush(stdout);
 }
 
@@ -59,8 +67,9 @@ void edit(struct Record* records) {
         switch (field) {
             case 'n':
                 printf("Enter student new name: ");
+                fflush(stdin);
                 fgets(records[index].name, 30, stdin);
-                records[index].name[strspn(records[index].name, "\n")] = '\0';
+                records[index].name[strcspn(records[index].name, "\n")] = '\0';
                 break;
             case 'a':
                 printf("Enter student new age: ");
@@ -83,10 +92,10 @@ void edit(struct Record* records) {
                     &records[index].grades[3], &records[index].grades[4]);
                 break;
             case 'e':
-                printf("Record updated successfully");
+                printf("Record updated successfully\n");
                 return;
             default:
-                printf("Wrong data field");
+                printf("Wrong data field\n");
                 break;
         }
     }
@@ -102,7 +111,8 @@ void delete(struct Record* records, int size) {
         records[c] = records[c+1];
         records[c].id -= 1;
     }
-    printf("Record deleted successfully");
+    reallocate_memory(&records, size-1);
+    printf("Record deleted successfully\n");
 }
 
 void view(struct Record* records, int size) {
@@ -132,18 +142,33 @@ void save(struct Record* records) {
     fclose(fptr);
 }
 
-void load(struct Record* records) {
+void load(struct Record* records, int* size) {
     //Recognize where program is executing
-    FILE *fptr = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "r");
-    if (fptr == NULL) {
-        printf("Error opening file");
+    FILE *fptr_1 = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "r");
+    FILE *fptr_2 = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "r");
+    if (fptr_1 == NULL || fptr_2 == NULL) {
+        printf("Error opening file\n");
+        return;
     }else {
+        // Calc lines num
+        int lines = 0;
+        for (char c = getc(fptr_1); c != EOF; c = getc(fptr_1)) {
+            if (c == '\n') {
+                lines++;
+            }
+        }
+        if (*size < lines) {
+            reallocate_memory(&records, lines - *size);
+        }
+        fclose(fptr_1);
+        *size = lines;
         int i = 0;
-        while (fscanf(fptr, "%d,%[^,],%d,%d,%c,%f,%f,%f,%f,%f", &records[i].id, &records[i].name,
+        while (fscanf(fptr_2, "%d,%[^,],%d,%d,%c,%f,%f,%f,%f,%f", &records[i].id, &records[i].name,
         &records[i].age, &records[i].course, &records[i].class, &records[i].grades[0], &records[i].grades[1],
         &records[i].grades[2], &records[i].grades[3], &records[i].grades[4]) == 10) {
             ++i;
         }
+        fclose(fptr_2);
     }
 }
 
@@ -163,6 +188,11 @@ void fill(struct Record* records) {
     records[1].age = 23;
     records[1].course = 1;
     records[1].class = 'B';
+    records[0].grades[0] = 3.4;
+    records[0].grades[1] = 5.33;
+    records[0].grades[2] = 7.45;
+    records[0].grades[3] = 9.89;
+    records[0].grades[4] = 8.8;
 }
 
 void banner() {
@@ -172,48 +202,84 @@ void banner() {
 }
 
 int main() {
-    struct Record records[30];
-    // Size for dynamic memory allocation
-    int size = sizeof(records) / sizeof(records[0]);
-    banner();
-    while (1) {
-        int option = 0;
-        fflush(stdin);
-        printf("[0] Create record\n");
-        printf("[1] Edit record\n");
-        printf("[2] View record\n");
-        printf("[3] Delete record\n");
-        printf("[4] Save\n");
-        printf("[5] Load\n");
-        printf("[6] Exit\n");
-        printf("Enter your option: ");
-        scanf("%d", &option);
-        fflush(stdin);
-
-        switch (option) {
-            case 0:
-                create(records, size);
-                break;
-            case 1:
-                edit(records);
-                break;
-            case 2:
-                view(records, size);
-                break;
-            case 3:
-                delete(records, size);
-            case 4:
-                save(records);
-                break;
-            case 5:
-                load(records);
-                break;
-            case 6:
-                exit(0);
-            default:
-                printf("Wrong option");
-                return 0;
+    int size = 1;
+    struct Record* records = malloc(size * sizeof(struct Record));
+    if (records == NULL) {
+        printf("Memory allocation error");
+        exit(1);
+    } else {
+        banner();
+        int option = -1;
+        int initial_data = 0;
+        while (initial_data == 0) {
+            option = -1;
+            fflush(stdin);
+            printf("[0] Create record\n");
+            printf("[1] Load records\n");
+            printf("[2] Exit\n");
+            printf("Enter your option: ");
+            scanf("%d", &option);
+            fflush(stdin);
+            switch (option) {
+                case 0:
+                    create(records, 1);
+                    initial_data = 1;
+                    break;
+                case 1:
+                    load(records, &size);
+                    initial_data = 1;
+                    break;
+                case 2:
+                    free(records);
+                    exit(0);
+                default:
+                    printf("Wrong option");
+                    break;
+            }
         }
-        size = sizeof(records) / sizeof(records[0]);
+        while (1) {
+            option = -1;
+            fflush(stdin);
+            printf("[0] Create record\n");
+            printf("[1] Edit record\n");
+            printf("[2] View record\n");
+            printf("[3] Delete record\n");
+            printf("[4] Save\n");
+            printf("[5] Load\n");
+            printf("[6] Exit\n");
+            printf("Enter your option: ");
+            scanf("%d", &option);
+            fflush(stdin);
+
+            switch (option) {
+                case 0:
+                    size++;
+                    reallocate_memory(&records, size);
+                    create(records, size);
+                    break;
+                case 1:
+                    edit(records);
+                    break;
+                case 2:
+                    view(records, size);
+                    break;
+                case 3:
+                    delete(records, size);
+                    size--;
+                    break;
+                case 4:
+                    save(records);
+                    break;
+                case 5:
+                    load(records, &size);
+                    break;
+                case 6:
+                    free(records);
+                    exit(0);
+                default:
+                    printf("Wrong option");
+                    break;
+            }
+        }
     }
 }

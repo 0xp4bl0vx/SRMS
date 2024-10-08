@@ -9,10 +9,13 @@
 - [X] Code functions and main
 - [X] Code the save and load of DB
 - [X] Pretty CLI
+- [X] Dynamic Memory allocation
+- [ ] Remove fflush() instructions
 - [ ] Debug
-- [ ] Dynamic Memory allocation
+- [ ] Remove fill() or comment
 - [ ] Publish v1
 - [ ] search() function
+- [ ] Better CLI (tables)
 - [ ] Publish v1.1
 
 ## Program features
@@ -34,7 +37,7 @@ that stores the students records. The program features are:
 - [x] view()
 - [x] save()
 - [x] load()
-- [ ] search()????
+- [ ] search()
 
 ## Record Structure
 - ID
