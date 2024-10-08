@@ -1,47 +1,12 @@
-# WORK IN PROGRESS!!!
+# SRMS v1
+Program for managing students records. Records include name,
+age, class, course and grades (currently only supports 5 
+subjects, the ones I study now, I will add support for custom 
+subjects in future versions).
+
 
 # TODO
-
-- [X] Design program features
-- [X] Design program functions
-- [X] Design record structure
-- [X] Code custom var for records
-- [X] Code functions and main
-- [X] Code the save and load of DB
-- [X] Pretty CLI
-- [X] Dynamic Memory allocation
-- [X] Debug (Bug when printing line 38)
-- [X] Remove fill() or comment
-- [ ] Publish v1
 - [ ] search() function
 - [ ] Better CLI (tables)
-- [ ] Publish v1.1
-
-## Program features
-
-The program is a students record management system, the program acts as a database
-that stores the students records. The program features are:
-- Add a student record
-- Edit a student record
-- Delete a student record
-- View records
-- Save records
-- Load records
-- Search records???? (as an intro to search algorithms)
-
-## Program functions
-- [x] create()
-- [x] edit()
-- [x] remove()
-- [x] view()
-- [x] save()
-- [x] load()
-- [ ] search()
-
-## Record Structure
-- ID
-- Name
-- Age
-- Course
-- Class
-- Grades
+- [ ] Dynamic memory for name and grades
+- [ ] Add custom subjects

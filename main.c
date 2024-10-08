@@ -41,6 +41,8 @@ void create(struct Record* records, int index) {
     if (records[index].class > 68) {
         records[index].class -= 32;
     }
+    printf("Grades must be introduced as comma separated floats\n");
+    printf("Following this order: Calculus, Business Management, Programming, Computers Technology, Physics\n");
     printf("Enter student grades: ");
     scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
         &records[index].grades[3], &records[index].grades[4]);
@@ -88,6 +90,8 @@ void edit(struct Record* records) {
                 }
                 break;
             case 4:
+                printf("Grades must be introduced as comma separated floats\n");
+                printf("Following this order: Calculus, Business Management, Programming, Computers Technology, Physics\n");
                 printf("Enter student new grades: ");
                 scanf("%f,%f,%f,%f,%f", &records[index].grades[0], &records[index].grades[1], &records[index].grades[2],
                     &records[index].grades[3], &records[index].grades[4]);
