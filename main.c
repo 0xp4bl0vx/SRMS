@@ -27,6 +27,7 @@ void create(struct Record* records, int index) {
     --index;
     records[index].id = index + 1;
     printf("Enter student name: ");
+    fflush(stdin);
     fgets(records[index].name, 30, stdin);
     records[index].name[strcspn(records[index].name, "\n")] = '\0';
     printf("Enter student age: ");
@@ -133,7 +134,7 @@ void view(struct Record* records, int size) {
 
 void save(struct Record* records) {
     // Recognize where program is executing
-    FILE *fptr = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "w");
+    FILE *fptr = fopen("records.txt", "w");
     // Print each record into the file
     for (int i = 0; i + 1 == records[i].id; i++) {
         fprintf(fptr, "%d,%s,%d,%d,%c", records[i].id, records[i].name,
@@ -148,8 +149,8 @@ void save(struct Record* records) {
 
 void load(struct Record* records, int* size) {
     //Recognize where program is executing
-    FILE *fptr_1 = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "r");
-    FILE *fptr_2 = fopen("C:\\Users\\chess\\CLionProjects\\SRMS\\records.txt", "r");
+    FILE *fptr_1 = fopen("records.txt", "r");
+    FILE *fptr_2 = fopen("records.txt", "r");
     if (fptr_1 == NULL || fptr_2 == NULL) {
         printf("Error opening file\n");
         return;
@@ -219,9 +220,9 @@ int main() {
             printf("[0] Create record\n");
             printf("[1] Load records\n");
             printf("[2] Exit\n");
+            fflush(stdin);
             printf("Enter your option: ");
             scanf("%d", &option);
-            fflush(stdin);
             switch (option) {
                 case 0:
                     create(records, 1);
@@ -235,13 +236,12 @@ int main() {
                     free(records);
                     exit(0);
                 default:
-                    printf("Wrong option");
                     break;
             }
         }
         while (1) {
             option = -1;
-            scanf("\n");
+            fflush(stdout);
             printf("[0] Create record\n");
             printf("[1] Edit record\n");
             printf("[2] View record\n");
@@ -279,7 +279,6 @@ int main() {
                     free(records);
                     exit(0);
                 default:
-                    printf("Wrong option");
                     break;
             }
         }
