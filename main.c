@@ -170,10 +170,10 @@ void load(struct Record* records, int* size) {
         fclose(fptr_2);
     }
 }
-
+/* Function for testing
 void fill(struct Record* records) {
     records[0].id = 1;
-    strcpy(records[0].name, "Pablo Moya");
+    strcpy(records[0].name, "name surname");
     records[0].age = 20;
     records[0].course = 2;
     records[0].class = 'A';
@@ -183,7 +183,7 @@ void fill(struct Record* records) {
     records[0].grades[3] = 9.89;
     records[0].grades[4] = 8.8;
     records[1].id = 2;
-    strcpy(records[1].name, "Ignacio Gomez");
+    strcpy(records[1].name, "name1 surname1");
     records[1].age = 23;
     records[1].course = 1;
     records[1].class = 'B';
@@ -193,7 +193,7 @@ void fill(struct Record* records) {
     records[0].grades[3] = 9.89;
     records[0].grades[4] = 8.8;
 }
-
+*/
 void banner() {
     printf("+------------------------------------+\n");
     printf("| Students Records Management System |\n");

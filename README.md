@@ -11,7 +11,7 @@
 - [X] Pretty CLI
 - [X] Dynamic Memory allocation
 - [X] Debug (Bug when printing line 38)
-- [ ] Remove fill() or comment
+- [X] Remove fill() or comment
 - [ ] Publish v1
 - [ ] search() function
 - [ ] Better CLI (tables)
