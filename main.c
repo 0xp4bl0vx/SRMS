@@ -37,7 +37,7 @@ void create(struct Record* records, int index) {
     scanf("%d", &records[index].course);
     fflush(stdin);
     printf("Enter student class [A, B, C, D]: ");
-    scanf("%c", &records[index].class);
+    scanf(" %c", &records[index].class);
     // Convert input from lowercase to uppercase
     if (records[index].class > 68) {
         records[index].class -= 32;
@@ -85,7 +85,7 @@ void edit(struct Record* records) {
                 break;
             case 3:
                 printf("Enter student new class: ");
-                scanf("%c", &records[index].class);
+                scanf(" %c", &records[index].class);
                 if (records[index].class > 68) {
                     records[index].class -= 32;
                 }
